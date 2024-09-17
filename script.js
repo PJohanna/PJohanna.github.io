@@ -1,1 +1,3 @@
 // JavaScript source code
+// https://openweathermap.org/api Alma1133 - c...
+// chatgpt idõjárás api js en keresztül htmlen belül

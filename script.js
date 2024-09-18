@@ -4,7 +4,7 @@
 
 document.getElementById('getWeather').addEventListener('click', function () {
     const city = document.getElementById('city').value;
-    const apiKey = '38d66cb7362bb9bf7814b7d7031b0564'; // Itt add meg az OpenWeatherMap API kulcsodat
+    const apiKey = '38d66cb7362bb9bf7814b7d7031b0564'; 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     fetch(url)

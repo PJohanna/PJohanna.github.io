@@ -2,29 +2,43 @@
 // https://openweathermap.org/api
 // chatgpt idõjárás api js en keresztül htmlen belül
 
-document.getElementById('getWeather').addEventListener('click', function () {
-    const city = document.getElementById('city').value;
-    const apiKey = '38d66cb7362bb9bf7814b7d7031b0564'; 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-    fetch(url)
+
+// Az API kulcsodat itt add meg
+const apiKey = '38d66cb7362bb9bf7814b7d7031b0564';
+
+function getWeather() {
+    // A város neve, amit a felhasználó megad
+    const city = document.getElementById('city').value;
+
+    // OpenWeatherMap API URL
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=hu`;
+
+    // Fetch API-val lekérjük az idõjárási adatokat
+    fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Hiba a lekérdezés során!');
+                throw new Error('Város nem található');
             }
             return response.json();
         })
         .then(data => {
-            const weatherDescription = data.weather[0].description;
+            // Az idõjárási adatok megjelenítése
+            const weatherDiv = document.getElementById('weather');
             const temperature = data.main.temp;
-            document.getElementById('weatherResult').innerHTML = `
-                <h2>${city} weather</h2>
-                <p>${weatherDescription}</p>
-                <p>Temperature: ${temperature} Celsius</p>
+            const description = data.weather[0].description;
+            const humidity = data.main.humidity;
+
+            weatherDiv.innerHTML = `
+                <p><strong>Város:</strong> ${data.name}</p>
+                <p><strong>Hõmérséklet:</strong> ${temperature} °C</p>
+                <p><strong>Idõjárás:</strong> ${description}</p>
+                <p><strong>Páratartalom:</strong> ${humidity}%</p>
             `;
         })
         .catch(error => {
-            document.getElementById('weatherResult').innerHTML = `<p>${error.message}</p>`;
+            // Hiba kezelése
+            const weatherDiv = document.getElementById('weather');
+            weatherDiv.innerHTML = `<p>Hiba történt: ${error.message}</p>`;
         });
-});
-
+}
